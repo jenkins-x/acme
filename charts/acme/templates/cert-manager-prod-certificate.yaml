@@ -17,5 +17,6 @@ spec:
   dnsNames:
   - "*.{{ .Values.jxRequirements.ingress.domain }}"
   - "{{ .Values.jxRequirements.ingress.domain }}"
+  - "{{ .Values.jxRequirements.ingress.altDomain }}"
 {{- end }}
 {{- end }}
