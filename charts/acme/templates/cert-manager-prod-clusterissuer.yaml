@@ -16,8 +16,7 @@ spec:
     solvers:
     - selector:
         dnsNames:
-        - "*.{{ .Values.jxRequirements.ingress.domain }}"
-        - "{{ .Values.jxRequirements.ingress.domain }}"
+{{- include "acme.dnsNamesProduction" . | trim | nindent 10 }}
       # ACME DNS-01 provider configurations
       dns01:
 {{- if eq .Values.jxRequirements.cluster.provider "gke" }}
