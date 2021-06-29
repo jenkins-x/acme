@@ -15,7 +15,6 @@ spec:
 {{- end }}
   commonName: "*.{{ .Values.jxRequirements.ingress.domain }}"
   dnsNames:
-  - "*.{{ .Values.jxRequirements.ingress.domain }}"
-  - "{{ .Values.jxRequirements.ingress.domain }}"
+{{- include "acme.dnsNamesProduction" . | trim | nindent 4 }}
 {{- end }}
 {{- end }}
