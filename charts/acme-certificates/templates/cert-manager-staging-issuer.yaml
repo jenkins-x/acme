@@ -1,9 +1,9 @@
 {{- if .Values.jxRequirements.ingress.tls.enabled }}
 {{- if not .Values.jxRequirements.ingress.tls.production }}
-{{- if .Values.issuer.cluster }}
+{{- if not .Values.issuer.cluster }}
 {{- if .Values.issuer.enabled }}
 apiVersion: cert-manager.io/v1
-kind: ClusterIssuer
+kind: Issuer
 metadata:
   name: letsencrypt-staging
 spec:
@@ -23,6 +23,18 @@ spec:
         {{- if $val.tls.enabled}}
         - "*.{{ $val.domain }}"
         - "{{ $val.domain }}"
+        {{- end }}
+        {{- end }}
+        {{- end }}
+        {{- if hasKey .Values.jxRequirements "environments" }}
+        {{- range $key, $val := .Values.jxRequirements.environments }}
+        {{- if hasKey $val "ingress" }}
+        {{- if $val.ingress.tls.enabled}}
+        {{- if $val.ingress.domain }}
+        - "*.{{ $val.ingress.domain }}"
+        - "{{ $val.ingress.domain }}"
+        {{- end }}
+        {{- end }}
         {{- end }}
         {{- end }}
         {{- end }}

@@ -4,7 +4,7 @@ jxRequirements:
     provider: ""
     region: ""
   ingress:
-    domain: "domain.com"
+    domain: "test.com"
     externalDNS: false
     namespaceSubDomain: -jx.
     tls:
@@ -27,7 +27,7 @@ jxRequirements:
       tls:
         email: ""
         enabled: true
-        production: true
+        production: false
         secretName: ""
 
 secretName: ""

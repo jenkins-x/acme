@@ -1,0 +1,30 @@
+{{- if .Values.issuer.enabled }}
+{{- $clusterIssuerEnabled := .Values.issuer.cluster }}
+{{- if hasKey .Values "extraDomains" }}
+{{- range $key, $val := .Values.extraDomains }}
+{{- if $val.tls.enabled}}
+{{- if not $val.tls.production }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: "tls-{{ $val.domain | replace "." "-" }}-s"
+  labels:
+    jenkins.io/letsencrypt-service: staging
+spec:
+  secretName: "tls-{{ $val.domain | replace "." "-" }}-s"
+  issuerRef:
+    name: letsencrypt-{{ $val.domain | replace "." "-" }}-staging-extra
+{{- if $clusterIssuerEnabled }}
+    kind: ClusterIssuer
+{{- end }}
+  commonName: "*.{{ $val.domain }}"
+  dnsNames:
+  - "*.{{ $val.domain }}"
+  - "{{ $val.domain }}"
+
+---
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}

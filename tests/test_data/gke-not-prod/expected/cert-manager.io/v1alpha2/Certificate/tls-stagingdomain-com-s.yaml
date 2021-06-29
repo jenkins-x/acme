@@ -1,4 +1,4 @@
-# Source: acme/templates/cert-manager-staging-certificate.yaml
+# Source: acme/templates/cert-manager-staging-extra-certificate.yaml
 apiVersion: cert-manager.io/v1alpha2
 kind: Certificate
 metadata:

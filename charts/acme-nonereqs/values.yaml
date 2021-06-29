@@ -1,0 +1,38 @@
+extraDomains:
+  - domain: "test.domain"
+    externalDNS: false
+    namespaceSubDomain: ""
+    tls:
+      email: ""
+      enabled: true
+      production: true
+      secretName: ""
+  - domain: "test.domain2"
+    externalDNS: false
+    namespaceSubDomain: ""
+    tls:
+      email: ""
+      enabled: true
+      production: false
+      secretName: ""
+
+secretName: ""
+
+issuer:
+  enabled: true
+  cluster: true
+
+jxRequirements:
+  cluster:
+    projectID: ""
+    provider: ""
+    region: ""
+  ingress:
+    domain: "domain.com"
+    externalDNS: false
+    namespaceSubDomain: -jx.
+    tls:
+      email: ""
+      enabled: true
+      production: true
+      secretName: ""

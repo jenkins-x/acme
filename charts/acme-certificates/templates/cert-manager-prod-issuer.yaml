@@ -1,18 +1,17 @@
-{{- if .Values.jxRequirements.ingress.tls.enabled }}
-{{- if not .Values.jxRequirements.ingress.tls.production }}
-{{- if .Values.issuer.cluster }}
+{{- if and .Values.jxRequirements.ingress.domain .Values.jxRequirements.ingress.tls.production }}
+{{- if not .Values.issuer.cluster }}
 {{- if .Values.issuer.enabled }}
 apiVersion: cert-manager.io/v1
-kind: ClusterIssuer
+kind: Issuer
 metadata:
-  name: letsencrypt-staging
+  name: letsencrypt-prod
 spec:
   acme:
-    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    server: https://acme-v02.api.letsencrypt.org/directory
     email: "{{ .Values.jxRequirements.ingress.tls.email }}"
     # Name of a secret used to store the ACME account private key
     privateKeySecretRef:
-      name: letsencrypt-staging
+      name: letsencrypt-prod
     solvers:
     - selector:
         dnsNames:
@@ -23,6 +22,18 @@ spec:
         {{- if $val.tls.enabled}}
         - "*.{{ $val.domain }}"
         - "{{ $val.domain }}"
+        {{- end }}
+        {{- end }}
+        {{- end }}
+        {{- if hasKey .Values.jxRequirements "environments" }}
+        {{- range $key, $val := .Values.jxRequirements.environments }}
+        {{- if hasKey $val "ingress" }}
+        {{- if $val.ingress.tls.enabled}}
+        {{- if $val.ingress.domain }}
+        - "*.{{ $val.ingress.domain }}"
+        - "{{ $val.ingress.domain }}"
+        {{- end }}
+        {{- end }}
         {{- end }}
         {{- end }}
         {{- end }}
@@ -48,7 +59,6 @@ spec:
           subscriptionID: {{ .Values.jxRequirements.cluster.azure.dns.subscriptionId }}
           resourceGroupName: {{ .Values.jxRequirements.cluster.azure.dns.resourceGroup }}
           hostedZoneName: {{ .Values.jxRequirements.ingress.domain }}
-{{- end }}
 {{- end }}
 {{- end }}
 {{- end }}
