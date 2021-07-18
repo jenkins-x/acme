@@ -18,3 +18,5 @@ secretName: ""
 issuer:
   enabled: false
   cluster: false
+
+dnsProvider: ""
