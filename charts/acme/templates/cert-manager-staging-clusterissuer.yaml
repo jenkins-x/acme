@@ -18,7 +18,7 @@ spec:
         dnsNames:
         - "*.{{ .Values.jxRequirements.ingress.domain }}"
         - "{{ .Values.jxRequirements.ingress.domain }}"
-{{- if .Values.jxRequirements.ingress.tls.httpSolver }}
+{{- if eq .Values.jxRequirements.cluster.provider "kubernetes" }}
       http01:
         ingress:
           class: nginx
