@@ -17,6 +17,11 @@ spec:
         dnsNames:
         - "*.{{ .Values.jxRequirements.ingress.domain }}"
         - "{{ .Values.jxRequirements.ingress.domain }}"
+{{- if .Values.jxRequirements.ingress.tls.http01_solver }}
+      http01:
+        ingress:
+          class: nginx
+{{- else }}
       # ACME DNS-01 provider configurations
       dns01:
 {{- if eq .Values.jxRequirements.cluster.provider "gke" }}
@@ -39,6 +44,7 @@ spec:
           subscriptionID: {{ .Values.jxRequirements.cluster.azure.dns.subscriptionId }}
           resourceGroupName: {{ .Values.jxRequirements.cluster.azure.dns.resourceGroup }}
           hostedZoneName: {{ .Values.jxRequirements.ingress.domain }}
+{{- end }}
 {{- end }}
 {{- end }}
 {{- end }}
