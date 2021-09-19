@@ -18,7 +18,7 @@ spec:
         - "*.{{ .Values.jxRequirements.ingress.domain }}"
         - "{{ .Values.jxRequirements.ingress.domain }}"
       # ACME DNS-01 provider configurations
-{{- if .Values.jxRequirements.ingress.tls.http01_solver }}
+{{- if .Values.jxRequirements.ingress.tls.httpSolver }}
       http01:
         ingress:
           class: nginx
