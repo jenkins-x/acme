@@ -18,6 +18,11 @@ spec:
         dnsNames:
         - "*.{{ .Values.jxRequirements.ingress.domain }}"
         - "{{ .Values.jxRequirements.ingress.domain }}"
+{{- if eq .Values.jxRequirements.cluster.provider "kubernetes" }}
+      http01:
+        ingress:
+          class: nginx
+{{- else }}
       # ACME DNS-01 provider configurations
       dns01:
 {{- if eq .Values.jxRequirements.cluster.provider "gke" }}
@@ -42,6 +47,7 @@ spec:
           hostedZoneName: {{ .Values.jxRequirements.ingress.domain }}
           managedIdentity:
             clientID: {{ .Values.jxRequirements.cluster.azure.clusterNodes.clientID }}
+{{- end }}
 {{- end }}
 {{- end }}
 {{- end }}
